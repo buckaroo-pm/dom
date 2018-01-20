@@ -11,12 +11,8 @@
 #include <dom/html/html_form_element.h>
 
 #include "html/html_form_element.h"
-#include "html/html_input_element.h"
-#include "html/html_select_element.h"
-#include "html/html_text_area_element.h"
-#include "html/html_button_element.h"
 
-#include "html/html_collection.h"
+#include "html/html_form_controls_collection.h"
 #include "html/html_document.h"
 
 #include "core/node.h"
@@ -28,8 +24,6 @@ static struct dom_element_protected_vtable _protect_vtable = {
 	},
 	DOM_HTML_FORM_ELEMENT_PROTECT_VTABLE
 };
-
-static bool _dom_is_form_control(struct dom_node_internal *node, void *ctx);
 
 /**
  * Create a dom_html_form_element object
@@ -71,6 +65,8 @@ dom_exception _dom_html_form_element_initialise(
 
 	err = _dom_html_element_initialise(params, &ele->base);
 	
+	ele->elements = NULL;
+
 	return err;
 }
 
@@ -81,6 +77,10 @@ dom_exception _dom_html_form_element_initialise(
  */
 void _dom_html_form_element_finalise(struct dom_html_form_element *ele)
 {
+	if (ele->elements != NULL) {
+		dom_html_form_controls_collection_unref(ele->elements);
+		ele->elements = NULL;
+	}
 
 	_dom_html_element_finalise(&ele->base);
 }
@@ -167,15 +167,23 @@ dom_exception _dom_html_form_element_copy_internal(
  * \return DOM_NO_ERR on success, appropriate dom_exception on failure.
  */
 dom_exception dom_html_form_element_get_elements(dom_html_form_element *ele,
-		struct dom_html_collection **col)
+		dom_html_form_controls_collection **col)
 {
 	dom_exception err;
-	dom_html_document *doc = (dom_html_document *) dom_node_get_owner(ele);
+
+	if (ele->elements != NULL) {
+		dom_html_form_controls_collection_ref(ele->elements);
+		*col = ele->elements;
+		return DOM_NO_ERR;
+	}
 	
-	assert(doc != NULL);
-	err = _dom_html_collection_create(doc,
-					  (dom_node_internal *) doc,
-					  _dom_is_form_control, ele, col);
+	err = _dom_html_form_controls_collection_create(ele, col);
+
+	if (err == DOM_NO_ERR) {
+		dom_html_form_controls_collection_ref(*col);
+		ele->elements = *col;
+	}
+
 	return err;
 }
 
@@ -190,20 +198,16 @@ dom_exception dom_html_form_element_get_length(dom_html_form_element *ele,
 		uint32_t *len)
 {
 	dom_exception err;
-	dom_html_document *doc = (dom_html_document *) dom_node_get_owner(ele);
-	dom_html_collection *col;
+	dom_html_form_controls_collection *col;
 	
-	assert(doc != NULL);
-	err = _dom_html_collection_create(doc,
-					  (dom_node_internal *) doc,
-					  _dom_is_form_control, ele, &col);
+	err = dom_html_form_element_get_elements(ele, &col);
+
 	if (err != DOM_NO_ERR)
 		return err;
 
-
-	err = dom_html_collection_get_length(col, len);
+	err = dom_html_form_controls_collection_get_length(col, len);
 	
-	dom_html_collection_unref(col);
+	dom_html_form_controls_collection_unref(col);
 	
 	return err;
 }
@@ -293,36 +297,3 @@ dom_exception dom_html_form_element_reset(dom_html_form_element *ele)
 					   doc->memoised[hds_reset], true,
 					   true, &success);
 }
-
-/*-----------------------------------------------------------------------*/
-/* Internal functions */
-
-/* Callback function to test whether certain node is a form control, see 
- * src/html/html_collection.h for detail. */
-static bool _dom_is_form_control(struct dom_node_internal *node, void *ctx)
-{
-	struct dom_html_document *doc =
-		(struct dom_html_document *)(node->owner);
-	struct dom_html_form_element *form = ctx;
-
-	
-	assert(node->type == DOM_ELEMENT_NODE);
-	
-        /* Form controls are INPUT TEXTAREA SELECT and BUTTON*/
-        if (dom_string_caseless_isequal(node->name,
-					doc->elements[DOM_HTML_ELEMENT_TYPE_INPUT]))
-		return ((dom_html_input_element *)node)->form == form;
-	if (dom_string_caseless_isequal(node->name,
-					doc->elements[DOM_HTML_ELEMENT_TYPE_TEXTAREA]))
-		return ((dom_html_text_area_element *)node)->form == form;
-	if (dom_string_caseless_isequal(node->name,
-					doc->elements[DOM_HTML_ELEMENT_TYPE_SELECT]))
-		return ((dom_html_select_element *)node)->form == form;
-	if (dom_string_caseless_isequal(node->name,
-					doc->elements[DOM_HTML_ELEMENT_TYPE_BUTTON])) {
-		return ((dom_html_button_element *)node)->form == form;
-	}
-
-	return false;
-}
-

@@ -12,11 +12,11 @@
 
 #include "html/html_element.h"
 
-struct dom_html_collection;
-
 struct dom_html_form_element {
 	struct dom_html_element base;
 			/**< The base class */
+	dom_html_form_controls_collection *elements;
+			/**< The elements collection (memoised) */
 };
 
 /* Create a dom_html_form_element object */

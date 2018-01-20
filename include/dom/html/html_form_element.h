@@ -11,12 +11,12 @@
 #include <dom/core/exceptions.h>
 #include <dom/core/string.h>
 
-struct dom_html_collection;
+#include <dom/html/html_form_controls_collection.h>
 
 typedef struct dom_html_form_element dom_html_form_element;
 
 dom_exception dom_html_form_element_get_elements(dom_html_form_element *ele,
-		struct dom_html_collection **col);
+		dom_html_form_controls_collection **col);
 dom_exception dom_html_form_element_get_length(dom_html_form_element *ele,
 		uint32_t *len);
 

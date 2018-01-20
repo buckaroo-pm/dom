@@ -40,6 +40,8 @@
 
 /* DOM HTML headers */
 #include <dom/html/html_collection.h>
+#include <dom/html/html_radio_nodelist.h>
+#include <dom/html/html_form_controls_collection.h>
 #include <dom/html/html_document.h>
 #include <dom/html/html_element.h>
 #include <dom/html/html_html_element.h>
