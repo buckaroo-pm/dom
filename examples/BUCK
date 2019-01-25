@@ -1,0 +1,10 @@
+cxx_binary(
+  name = 'dom-structure-dump',
+  srcs = [
+    'dom-structure-dump.c',
+  ],
+  deps = [
+    '//:dom',
+    '//bindings/hubbub:hubbub',
+  ],
+)

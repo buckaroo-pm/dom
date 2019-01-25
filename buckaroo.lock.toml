@@ -1,0 +1,29 @@
+manifest = "8dc5cfebbeb033ce8c8654740240149dbe53d32ce631d73ae13cf29baabddd34"
+
+[[dependency]]
+package = "github.com/buckaroo-pm/netsurf-hubbub"
+target = "//:hubbub"
+
+[[dependency]]
+package = "github.com/buckaroo-pm/netsurf-parserutils"
+target = "//:parserutils"
+
+[[dependency]]
+package = "github.com/buckaroo-pm/netsurf-wapcaplet"
+target = "//:wapcaplet"
+
+[lock."github.com/buckaroo-pm/netsurf-hubbub"]
+versions = [ "branch=master" ]
+revision = "a927156c467f628d541a7692e431a70b55a24cde"
+
+[lock."github.com/buckaroo-pm/netsurf-parserutils"]
+versions = [ "branch=master" ]
+revision = "bdee37e518fa178e8eaaa80fc6a8ac2eeb23f0be"
+
+[lock."github.com/buckaroo-pm/netsurf-wapcaplet"]
+versions = [ "branch=master" ]
+revision = "6312c7378ab40e37594b04fcce7f8753998e737e"
+
+[lock."github.com/buckaroo-pm/netsurf-wapcaplet".lock."github.com/buckaroo-pm/check"]
+versions = [ "branch=master" ]
+revision = "53e84bd2ed5d98cf98cb91e781a2983d7d01425d"

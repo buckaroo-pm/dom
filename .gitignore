@@ -5,3 +5,10 @@ examples/dom-structure-dump
 test/level*.c
 test/INDEX
 *~
+
+.buckd
+buck-out
+.buckconfig.local
+.buckconfig.d
+buckaroo
+buckaroo_macros.bzl

@@ -1,0 +1,23 @@
+load('//:buckaroo_macros.bzl', 'buckaroo_deps_from_package')
+load('//:subdir_glob.bzl', 'subdir_glob')
+
+hubbub = \
+  buckaroo_deps_from_package('github.com/buckaroo-pm/netsurf-hubbub')
+
+cxx_library(
+  name = 'hubbub',
+  header_namespace = 'dom/bindings/hubbub',
+  exported_headers = subdir_glob([
+    ('', '**/*.h'),
+  ]),
+  srcs = glob([
+    '**/*.c',
+  ]),
+  deps = hubbub + [
+    '//:internal-headers',
+    '//:dom',
+  ],
+  visibility = [
+    'PUBLIC',
+  ],
+)

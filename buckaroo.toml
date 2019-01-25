@@ -1,0 +1,13 @@
+targets = [ "//:dom" ]
+
+[[dependency]]
+package = "github.com/buckaroo-pm/netsurf-hubbub"
+version = "branch=master"
+
+[[dependency]]
+package = "github.com/buckaroo-pm/netsurf-parserutils"
+version = "branch=master"
+
+[[dependency]]
+package = "github.com/buckaroo-pm/netsurf-wapcaplet"
+version = "branch=master"
