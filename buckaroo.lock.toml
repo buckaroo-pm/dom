@@ -1,4 +1,4 @@
-manifest = "960967b57e9242de3ca3227768de3c78b3747d2005536bd56b9081e40da20bb1"
+manifest = "fe6dffbb3a0bd3e89606228ee4429906f424b5eeddb9fe7313e0d9e3261f27c6"
 
 [[dependency]]
 package = "github.com/buckaroo-pm/netsurf-hubbub"
