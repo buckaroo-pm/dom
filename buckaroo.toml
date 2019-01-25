@@ -11,3 +11,7 @@ version = "branch=master"
 [[dependency]]
 package = "github.com/buckaroo-pm/netsurf-wapcaplet"
 version = "branch=master"
+
+[[dependency]]
+package = "github.com/buckaroo-pm/xml2"
+version = "branch=master"

@@ -1,0 +1,23 @@
+load('//:buckaroo_macros.bzl', 'buckaroo_deps_from_package')
+load('//:subdir_glob.bzl', 'subdir_glob')
+
+xml2 = \
+  buckaroo_deps_from_package('github.com/buckaroo-pm/xml2')
+
+cxx_library(
+  name = 'xml',
+  header_namespace = 'dom/bindings/xml',
+  exported_headers = subdir_glob([
+    ('', '**/*.h'),
+  ]),
+  srcs = glob([
+    '**/*.c',
+  ]),
+  deps = xml2 + [
+    '//:internal-headers',
+    '//:dom',
+  ],
+  visibility = [
+    'PUBLIC',
+  ],
+)

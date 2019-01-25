@@ -1,4 +1,4 @@
-manifest = "8dc5cfebbeb033ce8c8654740240149dbe53d32ce631d73ae13cf29baabddd34"
+manifest = "960967b57e9242de3ca3227768de3c78b3747d2005536bd56b9081e40da20bb1"
 
 [[dependency]]
 package = "github.com/buckaroo-pm/netsurf-hubbub"
@@ -11,6 +11,14 @@ target = "//:parserutils"
 [[dependency]]
 package = "github.com/buckaroo-pm/netsurf-wapcaplet"
 target = "//:wapcaplet"
+
+[[dependency]]
+package = "github.com/buckaroo-pm/xml2"
+target = "//:xml2"
+
+[lock."github.com/buckaroo-pm/madler-zlib"]
+versions = [ "branch=master" ]
+revision = "906f727175ca6a7f8943e375467d6e461a55b68d"
 
 [lock."github.com/buckaroo-pm/netsurf-hubbub"]
 versions = [ "branch=master" ]
@@ -27,3 +35,11 @@ revision = "6312c7378ab40e37594b04fcce7f8753998e737e"
 [lock."github.com/buckaroo-pm/netsurf-wapcaplet".lock."github.com/buckaroo-pm/check"]
 versions = [ "branch=master" ]
 revision = "53e84bd2ed5d98cf98cb91e781a2983d7d01425d"
+
+[lock."github.com/buckaroo-pm/xml2"]
+versions = [ "branch=master" ]
+revision = "d50aefc251efb38ed3c7ed5e7ee643583e0d4b9e"
+
+[lock."github.com/buckaroo-pm/xz"]
+versions = [ "branch=master" ]
+revision = "593cc1510a5b0f62d0d2167bdd57d36182a0cf35"
