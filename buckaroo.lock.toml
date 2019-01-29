@@ -18,7 +18,7 @@ target = "//:xml2"
 
 [lock."github.com/buckaroo-pm/madler-zlib"]
 versions = [ "branch=master" ]
-revision = "906f727175ca6a7f8943e375467d6e461a55b68d"
+revision = "76044bba206818f3378c346396f4a33de338d71c"
 
 [lock."github.com/buckaroo-pm/netsurf-hubbub"]
 versions = [ "branch=master" ]
